@@ -1,0 +1,24 @@
+{
+  "name": "part-1-nosql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdalfaro4/Part-1-NoSql.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jdalfaro4/Part-1-NoSql/issues"
+  },
+  "homepage": "https://github.com/jdalfaro4/Part-1-NoSql#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.0.3"
+  }
+}
