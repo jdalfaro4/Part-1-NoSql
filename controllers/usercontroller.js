@@ -1,47 +1,66 @@
-const { User } = require('../models');
+const User = require('../models/user');
 
-
-const getAllUsers = (req, res) => {
-    res.json(User);
-};
-
-const getSingleUserById = (req, res) => {
-    User.find((u) => u.id === parseInt(req.params.userId));
-    if (User) {
-        res.json(User);
-    } else {
-        res.status(404);
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find();
+        res.json(users);
+    } catch (err) {
+        res.status(500)
     }
 };
 
-const createUser = (req, res) => {
-    const user = {
-        id: users.length + 1,
-        name: req.body.name,
-        email: req.body.email,
-    };
-    users.push(user);
-    res.status(201).json(user);
-};
-
-const updateUserById = (req, res) => {
-    const user = users.find((u) => u.id === parseInt(req.params.userId));
-    if (user) {
-        user.name = req.body.name || user.name;
-        user.email = req.body.email || user.email;
-        res.json(user);
-    } else {
-        res.status(404);
+const getSingleUserById = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404);
+        }
+    } catch (err) {
+        res.status(500);
     }
 };
 
-const deleteUserById = (req, res) => {
-    const index = users.findIndex((u) => u.id === parseInt(req.params.userId));
-    if (index !== -1) {
-        users.splice(index, 1);
-        res.json({ message: "User deleted" });
-    } else {
-        res.status(404);
+const createUser = async (req, res) => {
+    try {
+        const user = new User({
+            name: req.body.name,
+            email: req.body.email,
+        });
+        const savedUser = await user.save();
+        res.status(201).json(savedUser);
+    } catch (err) {
+        res.status(500);
+    }
+};
+
+const updateUserById = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        if (user) {
+            user.name = req.body.name || user.name;
+            user.email = req.body.email || user.email;
+            const updatedUser = await user.save();
+            res.json(updatedUser);
+        } else {
+            res.status(404);
+        }
+    } catch (err) {
+        res.status(500);
+    }
+};
+
+const deleteUserById = async (req, res) => {
+    try {
+        const deletedUser = await User.findByIdAndDelete(req.params.userId);
+        if (deletedUser) {
+            res.json({ message: 'User deleted' });
+        } else {
+            res.status(404);
+        }
+    } catch (err) {
+        res.status(500);
     }
 };
 
