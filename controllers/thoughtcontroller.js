@@ -38,11 +38,23 @@ const createThought = async (req, res) => {
     }
 };
 
-
+const deleteThoughtById = async (req, res) => {
+    try {
+        const deletedThought = await Thought.findByIdAndDelete(req.params.Id);
+        if (deletedThought) {
+            res.json({ message: 'User deleted' });
+        } else {
+            res.status(404);
+        }
+    } catch (err) {
+        res.status(500);
+    }
+};
 
 
 module.exports = {
     getAllThoughts,
     findThoughtById,
-    createThought
+    createThought,
+    deleteThoughtById
 };
