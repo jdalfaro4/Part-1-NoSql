@@ -1,8 +1,9 @@
-const thought = require('../models/thought');
+
+const { Thought } = require('../models');
 
 const getAllThoughts = async (req, res) => {
     try {
-        const thoughts = await thought.find();
+        const thoughts = await Thought.find();
         res.json(thoughts);
     } catch (err) {
         console.error(err);
@@ -12,7 +13,7 @@ const getAllThoughts = async (req, res) => {
 
 const findThoughtById = async (req, res) => {
     try {
-        const thought = await thought.findById(req.params.thoughtId);
+        const thought = await Thought.findById(req.params.thoughtId);
         if (!thought) {
             return res.status(404).json({ message: 'Thought not found' });
         }
@@ -27,9 +28,10 @@ const findThoughtById = async (req, res) => {
 const createThought = async (req, res) => {
     try {
         const { thoughtText, username } = req.body;
-        const thought = new thought({ thoughtText, username });
-        await thought.save();
-        res.json(thought);
+        console.log(Thought)
+        Thought.create(req.body).then((thoughtdata) => {
+            res.status(201).json(thoughtdata)
+        });
     } catch (err) {
         console.error(err);
         res.status(500);

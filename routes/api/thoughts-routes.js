@@ -4,9 +4,9 @@ const {
     getAllThoughts,
     createThought,
     findThoughtById,
-} = require('../../controllers/thoughtController');
+} = require('../../controllers/thoughtcontroller');
 
-router.route('/api/thought').get(getAllThoughts).post(createThought);
+router.route('/').get(getAllThoughts).post(createThought);
 
 router.route('/:thoughtId').get(findThoughtById);
 
